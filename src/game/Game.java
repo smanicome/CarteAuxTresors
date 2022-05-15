@@ -20,5 +20,17 @@ public class Game {
 
     public void run() {
         actions.forEach(action -> action.process(adventurer, map));
-    };
+    }
+
+    public TreasureMap getMap() {
+        return map;
+    }
+
+    public Adventurer getAdventurer() {
+        return adventurer;
+    }
+
+    public List<Action> getActions() {
+        return actions;
+    }
 }

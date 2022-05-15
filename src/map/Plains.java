@@ -1,10 +1,10 @@
 package map;
 
-public class Mountain implements Tile {
+public class Plains implements Tile {
     private final int x;
     private final int y;
 
-    public Mountain(int x, int y) {
+    public Plains(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -17,10 +17,5 @@ public class Mountain implements Tile {
     @Override
     public int getY() {
         return y;
-    }
-
-    @Override
-    public String toString() {
-        return "M - " + x + " - " + y;
     }
 }

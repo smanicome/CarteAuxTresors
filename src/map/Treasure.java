@@ -13,20 +13,29 @@ public class Treasure implements Tile {
 
     @Override
     public int getX() {
-        return 0;
+        return x;
     }
 
     @Override
     public int getY() {
-        return 0;
+        return y;
     }
 
     public int getRemainingLoot() {
         return remainingLoot;
     }
 
+    public void decrementRemainingLoot() {
+        if(remainingLoot == 0) throw new IllegalStateException();
+        setRemainingLoot(remainingLoot - 1);
+    }
     public void setRemainingLoot(int remainingLoot) {
         if(remainingLoot < 0) throw new IllegalArgumentException();
         this.remainingLoot = remainingLoot;
+    }
+
+    @Override
+    public String toString() {
+        return "T - " + x + " - " + y + " - " + remainingLoot;
     }
 }

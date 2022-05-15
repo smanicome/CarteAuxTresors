@@ -14,4 +14,14 @@ public enum Orientation {
             default -> Optional.empty();
         };
     }
+
+    @Override
+    public String toString() {
+        return switch (this) {
+            case NORTH -> "N";
+            case EAST -> "E";
+            case WEST -> "W";
+            case SOUTH -> "S";
+        };
+    }
 }

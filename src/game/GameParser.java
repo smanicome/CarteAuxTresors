@@ -1,18 +1,33 @@
 package game;
 
 import actions.Action;
+import adventurer.Adventurer;
 import adventurer.AdventurerBuilder;
 import exceptions.InvalidDataException;
 import map.*;
 
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Path;
 import java.util.*;
 
 abstract class GameParser {
 
-    private static void validateData() throws InvalidDataException {
+    private static void validateData(TreasureMap treasureMap, Adventurer adventurer) throws InvalidDataException {
+        try {
+            Objects.checkIndex(adventurer.getX(), treasureMap.getWidth());
+            Objects.checkIndex(adventurer.getY(), treasureMap.getHeight());
+        } catch (IndexOutOfBoundsException e) {
+            throw new InvalidDataException("Adventurer out of map\n" + adventurer + "\n" + treasureMap);
+        }
 
+        for(Tile tile: treasureMap.getTiles()) {
+            try {
+                Objects.checkIndex(tile.getX(), treasureMap.getWidth());
+                Objects.checkIndex(tile.getY(), treasureMap.getHeight());
+            } catch (IndexOutOfBoundsException e) {
+                throw new InvalidDataException("Tile out of map\n" + tile + "\n" + treasureMap);
+            }
+        }
     }
 
     private static void parseTreasure(TreasureMapBuilder treasureMapBuilder, String[] parameters) throws InvalidDataException {
@@ -70,11 +85,11 @@ abstract class GameParser {
 
     private static void parseActions(ArrayList<Action> actions, String tokens) throws InvalidDataException {
         try {
-            var optionalActions = Arrays.stream(tokens.split(""))
+            var parsedActions = Arrays.stream(tokens.split(""))
                 .map(Action::fromToken)
                 .map(Optional::orElseThrow)
                 .toList();
-            actions.addAll(optionalActions);
+            actions.addAll(parsedActions);
         } catch (NoSuchElementException e) {
             throw new InvalidDataException("Unrecognized token for adventurer's action: " + tokens);
         }
@@ -103,6 +118,26 @@ abstract class GameParser {
             }
         }
 
-        return new Game(treasureMapBuilder.build(), adventurerBuilder.build(), actions);
+        var map = treasureMapBuilder.build();
+        var adventurer = adventurerBuilder.build();
+        validateData(map, adventurer);
+
+        return new Game(map, adventurer, actions);
+    }
+
+    private static void save(Game game, PrintStream printStream) {
+        printStream.println(game.getMap());
+        game.getMap().getTiles().forEach(printStream::println);
+        printStream.print(game.getAdventurer());
+    }
+
+    public static void save(Game game, String outputFilePath) throws IOException {
+        var file = new File(outputFilePath);
+        var pw = new PrintStream(file);
+
+        save(game, pw);
+    }
+    public static void save(Game game) throws IOException {
+        save(game, System.out);
     }
 }

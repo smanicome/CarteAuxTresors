@@ -24,4 +24,9 @@ public class TreasureMap {
     public List<Tile> getTiles() {
         return tiles;
     }
+
+    @Override
+    public String toString() {
+        return "C - " + width + " - " + height;
+    }
 }

@@ -5,6 +5,7 @@ public class Treasure extends Tile {
 
     public Treasure(Position position, int remainingLoot) {
         super(position);
+        if(remainingLoot < 0) throw new IllegalArgumentException();
         this.remainingLoot = remainingLoot;
     }
 

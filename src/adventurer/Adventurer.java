@@ -13,7 +13,7 @@ public class Adventurer {
         this.name = Objects.requireNonNull(name);
         this.position = Objects.requireNonNull(position);
         this.orientation = Objects.requireNonNull(orientation);
-        this.actions = actions;
+        this.actions = Objects.requireNonNull(actions);
     }
 
 
@@ -33,7 +33,7 @@ public class Adventurer {
     }
 
     public void setPosition(Position position) {
-        this.position = position;
+        this.position = Objects.requireNonNull(position);
     }
 
     public Orientation getOrientation() {
@@ -53,6 +53,7 @@ public class Adventurer {
     }
 
     public void moveToTile(Tile tile) {
+        Objects.requireNonNull(tile);
         switch (tile) {
             case Plains plains -> setPosition(plains.getPosition());
             case Treasure treasure -> {
@@ -71,6 +72,9 @@ public class Adventurer {
     }
 
     public void act(TreasureMap map, List<Adventurer> adventurers) {
+        Objects.requireNonNull(map);
+        Objects.requireNonNull(adventurers);
+
         if(actions.hasNext())
             actions.next().process(this, map, adventurers);
     }

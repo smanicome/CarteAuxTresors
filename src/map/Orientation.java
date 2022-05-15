@@ -1,11 +1,14 @@
 package map;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public enum Orientation {
     NORTH, EAST, WEST, SOUTH;
 
     public static Optional<Orientation> fromLetter(String letter) {
+        Objects.requireNonNull(letter);
+
         return switch (letter) {
             case "N" -> Optional.of(NORTH);
             case "E" -> Optional.of(EAST);

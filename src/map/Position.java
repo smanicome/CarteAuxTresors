@@ -1,5 +1,7 @@
 package map;
 
+import java.util.Objects;
+
 public class Position {
     private final int x;
     private final int y;
@@ -11,6 +13,8 @@ public class Position {
     }
 
     public Position shiftTo(Orientation orientation) {
+        Objects.requireNonNull(orientation);
+
         return switch (orientation) {
             case NORTH -> new Position(x, y - 1);
             case EAST -> new Position(x + 1, y);

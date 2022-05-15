@@ -10,6 +10,10 @@ import java.util.Optional;
 public class Forward implements Action {
 
     private Optional<Tile> getTileForCoordinates(Position position, List<Tile> tiles, List<Adventurer> adventurers) {
+        Objects.requireNonNull(position);
+        Objects.requireNonNull(tiles);
+        Objects.requireNonNull(adventurers);
+
         if(isBlockedByAdventurer(position, adventurers)) return Optional.empty();
         return Objects.requireNonNull(tiles).stream()
                 .filter(tile -> position.equals(tile.getPosition()))
@@ -18,11 +22,17 @@ public class Forward implements Action {
     }
 
     private boolean isBlockedByAdventurer(Position position, List<Adventurer> adventurers) {
+        Objects.requireNonNull(position);
+        Objects.requireNonNull(adventurers);
+
         return adventurers.stream().anyMatch(adventurer -> position.equals(adventurer.getPosition()));
     }
 
     @Override
     public void process(Adventurer adventurer, TreasureMap treasureMap, List<Adventurer> adventurers) {
+        Objects.requireNonNull(adventurer);
+        Objects.requireNonNull(treasureMap);
+        Objects.requireNonNull(adventurers);
 
         Optional<Position> optionalPosition = switch (adventurer.getOrientation()) {
             case NORTH -> {

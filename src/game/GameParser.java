@@ -14,6 +14,9 @@ import java.util.*;
 abstract class GameParser {
 
     private static void validateData(TreasureMap treasureMap, List<Adventurer> adventurers) throws InvalidDataException {
+        Objects.requireNonNull(treasureMap);
+        Objects.requireNonNull(adventurers);
+
         for (Adventurer adventurer : adventurers) {
             try {
                 Objects.checkIndex(adventurer.getPosition().getX(), treasureMap.getWidth());
@@ -34,6 +37,8 @@ abstract class GameParser {
     }
 
     private static Treasure parseTreasure(String[] parameters) throws InvalidDataException {
+        Objects.requireNonNull(parameters);
+
         if(parameters.length != 4) throw new InvalidDataException("Invalid data for treasure: " + String.join(" - ", parameters));
         try {
             var x = Integer.parseInt(parameters[1]);
@@ -46,6 +51,8 @@ abstract class GameParser {
     }
 
     private static Mountain parseMountain(String[] parameters) throws InvalidDataException {
+        Objects.requireNonNull(parameters);
+
         if(parameters.length != 3) throw new InvalidDataException("Invalid data for mountain: " + String.join(" - ", parameters));
         try {
             var x = Integer.parseInt(parameters[1]);
@@ -57,6 +64,9 @@ abstract class GameParser {
     }
 
     private static void parseTreasureMap(TreasureMapBuilder treasureMapBuilder, String[] parameters) throws InvalidDataException {
+        Objects.requireNonNull(treasureMapBuilder);
+        Objects.requireNonNull(parameters);
+
         if(parameters.length != 3) throw new InvalidDataException("Invalid data for map: " + String.join(" - ", parameters));
         try {
             var width = Integer.parseInt(parameters[1]);
@@ -70,6 +80,8 @@ abstract class GameParser {
     }
 
     private static Adventurer parseAdventurer(String[] parameters) throws InvalidDataException {
+        Objects.requireNonNull(parameters);
+
         if(parameters.length != 6) throw new InvalidDataException("Invalid data for adventurer: " + String.join(" - ", parameters));
         try {
             var name = parameters[1];
@@ -85,6 +97,8 @@ abstract class GameParser {
     }
 
     private static List<Action> parseActions(String tokens) throws InvalidDataException {
+        Objects.requireNonNull(tokens);
+
         try {
             return Arrays.stream(tokens.split(""))
                 .map(Action::fromToken)
@@ -96,6 +110,8 @@ abstract class GameParser {
     }
 
     public static Game load(String inputFilePath) throws IOException, InvalidDataException {
+        Objects.requireNonNull(inputFilePath);
+
         Scanner scanner = new Scanner(Path.of(inputFilePath));
         TreasureMapBuilder treasureMapBuilder = new TreasureMapBuilder();
         ArrayList<Adventurer> adventurers = new ArrayList<>();
@@ -121,12 +137,18 @@ abstract class GameParser {
     }
 
     private static void save(Game game, PrintStream printStream) {
+        Objects.requireNonNull(game);
+        Objects.requireNonNull(printStream);
+
         printStream.println(game.getMap());
         game.getMap().getTiles().forEach(printStream::println);
         game.getAdventurers().forEach(printStream::println);
     }
 
     public static void save(Game game, String outputFilePath) throws IOException {
+        Objects.requireNonNull(game);
+        Objects.requireNonNull(outputFilePath);
+
         var file = new File(outputFilePath);
         var pw = new PrintStream(file);
 
@@ -134,6 +156,8 @@ abstract class GameParser {
     }
 
     public static void save(Game game) throws IOException {
+        Objects.requireNonNull(game);
+
         save(game, System.out);
     }
 }

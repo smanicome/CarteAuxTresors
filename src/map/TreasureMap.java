@@ -1,6 +1,7 @@
 package map;
 
 import java.util.List;
+import java.util.Objects;
 
 public class TreasureMap {
     private final int width;
@@ -8,9 +9,10 @@ public class TreasureMap {
     private final List<Tile> tiles;
 
     public TreasureMap(int width, int height, List<Tile> tiles) {
+        if(width < 0 || height < 0) throw new IllegalArgumentException();
         this.width = width;
         this.height = height;
-        this.tiles = List.copyOf(tiles);
+        this.tiles = List.copyOf(Objects.requireNonNull(tiles));
     }
 
     public int getWidth() {

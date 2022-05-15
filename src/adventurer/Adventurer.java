@@ -7,6 +7,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
+
+/**
+ * This class represents the adventurer. It holds all the information necessary to identify and locate an adventurer on a map
+ * as well as the actions that the adventurer will take
+ */
 public class Adventurer {
 
     public Adventurer(String name, Position position, Orientation orientation, Iterator<Action> actions) {
@@ -56,6 +61,9 @@ public class Adventurer {
         return loots;
     }
 
+    /**
+     * @param tile Tile on which the adventurer attempts to move at
+     */
     public void moveToTile(Tile tile) {
         Objects.requireNonNull(tile);
         switch (tile) {
@@ -71,10 +79,18 @@ public class Adventurer {
         }
     }
 
+    /**
+     * @return True if there are any action remaining for this adventurer, false otherwise
+     */
     public boolean hasActionsLeft() {
         return actions.hasNext();
     }
 
+    /**
+     * If a there is an action remaining, processes it
+     * @param map Map on which the adventurer acts
+     * @param adventurers All the adventurers on the map
+     */
     public void act(TreasureMap map, List<Adventurer> adventurers) {
         Objects.requireNonNull(map);
         Objects.requireNonNull(adventurers);

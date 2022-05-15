@@ -7,6 +7,9 @@ import map.TreasureMap;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Rotates the adventurer clockwise
+ */
 public class RotateRight implements Action {
     @Override
     public void process(Adventurer adventurer, TreasureMap treasureMap, List<Adventurer> adventurers) {

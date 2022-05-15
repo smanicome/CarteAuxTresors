@@ -4,6 +4,9 @@ import exceptions.InvalidDataException;
 
 import java.io.IOException;
 
+/**
+ * Entry point of the program. Expects an input file path as first argument and a second optional argument as the output file path
+ */
 public class TreasureHunt {
     public static void main(String[] args) {
         if(args.length < 1) {

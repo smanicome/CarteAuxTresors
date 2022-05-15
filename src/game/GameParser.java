@@ -11,8 +11,17 @@ import java.io.PrintStream;
 import java.nio.file.Path;
 import java.util.*;
 
+/**
+ * Utility class used to parse the input file into a game
+ */
 abstract class GameParser {
 
+    /**
+     * Checks that nothing is out of the map's bounds, if there is throws an exception
+     * @param treasureMap Parsed map
+     * @param adventurers Parsed adventurers
+     * @throws InvalidDataException if either the adventurers or the tiles are out of bounds
+     */
     private static void validateData(TreasureMap treasureMap, List<Adventurer> adventurers) throws InvalidDataException {
         Objects.requireNonNull(treasureMap);
         Objects.requireNonNull(adventurers);
@@ -36,6 +45,11 @@ abstract class GameParser {
         }
     }
 
+    /**
+     * @param parameters Array of string expected to hold all the information defining a Treasure
+     * @return The parsed treasure
+     * @throws InvalidDataException if the parameters could not be used to parse a treasure
+     */
     private static Treasure parseTreasure(String[] parameters) throws InvalidDataException {
         Objects.requireNonNull(parameters);
 
@@ -51,6 +65,11 @@ abstract class GameParser {
         }
     }
 
+    /**
+     * @param parameters Array of string expected to hold all the information defining a Mountain
+     * @return The parsed mountain
+     * @throws InvalidDataException if the parameters could not be used to parse a mountain
+     */
     private static Mountain parseMountain(String[] parameters) throws InvalidDataException {
         Objects.requireNonNull(parameters);
 
@@ -65,6 +84,11 @@ abstract class GameParser {
         }
     }
 
+    /**
+     * @param treasureMapBuilder Using a builder in order to add tiles later
+     * @param parameters Array of string expected to hold the width and height of the map
+     * @throws InvalidDataException if the parameters could not be used to parse a map
+     */
     private static void parseTreasureMap(TreasureMapBuilder treasureMapBuilder, String[] parameters) throws InvalidDataException {
         Objects.requireNonNull(treasureMapBuilder);
         Objects.requireNonNull(parameters);
@@ -83,6 +107,11 @@ abstract class GameParser {
         }
     }
 
+    /**
+     * @param parameters Array of string expected to hold all the information defining an Adventurer
+     * @return The parsed adventurer
+     * @throws InvalidDataException if the parameters could not be used to parse an adventurer
+     */
     private static Adventurer parseAdventurer(String[] parameters) throws InvalidDataException {
         Objects.requireNonNull(parameters);
 
@@ -103,6 +132,11 @@ abstract class GameParser {
         }
     }
 
+    /**
+     * @param tokens A sequence of letters to be split and then parsed into several actions
+     * @return A list of the parsed actions
+     * @throws InvalidDataException If any token could not be parsed into an action
+     */
     private static List<Action> parseActions(String tokens) throws InvalidDataException {
         Objects.requireNonNull(tokens);
 
@@ -116,6 +150,11 @@ abstract class GameParser {
         }
     }
 
+    /**
+     * @param inputFilePath Input file used to parse the game
+     * @return The parsed Game
+     * @throws InvalidDataException When even one line could not be successfully parsed, except comments
+     */
     public static Game load(String inputFilePath) throws IOException, InvalidDataException {
         Objects.requireNonNull(inputFilePath);
 
@@ -147,6 +186,11 @@ abstract class GameParser {
         }
     }
 
+    /**
+     * Saves the game into a file, its format is almost exactly identical to the output file, although it cannot directly be used as an input file
+     * @param game Game to save
+     * @param printStream PrintStream used to write into the selected file
+     */
     private static void save(Game game, PrintStream printStream) {
         Objects.requireNonNull(game);
         Objects.requireNonNull(printStream);
@@ -156,6 +200,11 @@ abstract class GameParser {
         game.getAdventurers().forEach(printStream::println);
     }
 
+    /**
+     * Save the game using a preferred output file
+     * @param game Game to save
+     * @param outputFilePath Preferred file to save in
+     */
     public static void save(Game game, String outputFilePath) throws IOException {
         Objects.requireNonNull(game);
         Objects.requireNonNull(outputFilePath);
@@ -166,6 +215,10 @@ abstract class GameParser {
         save(game, pw);
     }
 
+    /**
+     * Prints the game's state on the standard output
+     * @param game Game to save
+     */
     public static void save(Game game) throws IOException {
         Objects.requireNonNull(game);
 

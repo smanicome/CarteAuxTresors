@@ -3,6 +3,9 @@ package map;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Represents the map, holds width, height and a list of specific tiles
+ */
 public class TreasureMap {
     private final int width;
     private final int height;

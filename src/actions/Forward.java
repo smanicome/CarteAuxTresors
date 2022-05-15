@@ -7,8 +7,18 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * Attempt to move an adventurer forward to its orientation
+ */
 public class Forward implements Action {
 
+    /**
+     * Returns the tile at the given position
+     * @param position Position of the tile
+     * @param tiles List of specific tiles
+     * @param adventurers All the adventurers on the map
+     * @return The tile wrapped in an optional, if an adventurer is at the given position return an empty optional instead
+     */
     private Optional<Tile> getTileForCoordinates(Position position, List<Tile> tiles, List<Adventurer> adventurers) {
         Objects.requireNonNull(position);
         Objects.requireNonNull(tiles);
@@ -21,6 +31,12 @@ public class Forward implements Action {
                 .or(() -> Optional.of(new Plains(position)));
     }
 
+    /**
+     * Checks if an adventurer is at the given position on the map
+     * @param position Position where to check
+     * @param adventurers All the adventurers on the map
+     * @return True if an adventurer is at the given position, false otherwise
+     */
     private boolean isBlockedByAdventurer(Position position, List<Adventurer> adventurers) {
         Objects.requireNonNull(position);
         Objects.requireNonNull(adventurers);
@@ -28,6 +44,12 @@ public class Forward implements Action {
         return adventurers.stream().anyMatch(adventurer -> position.equals(adventurer.getPosition()));
     }
 
+    /**
+     * Checks the boundaries before attempting to move
+     * @param adventurer  The adventurer that makes the action
+     * @param treasureMap The map on which the action takes place
+     * @param adventurers All the users on the map
+     */
     @Override
     public void process(Adventurer adventurer, TreasureMap treasureMap, List<Adventurer> adventurers) {
         Objects.requireNonNull(adventurer);

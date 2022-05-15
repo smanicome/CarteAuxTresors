@@ -3,6 +3,9 @@ package map;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * Used to build a map, all the data must be specified to successfully build a map
+ */
 public class TreasureMapBuilder {
     private Integer width;
     private Integer height;

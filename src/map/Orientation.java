@@ -3,6 +3,7 @@ package map;
 import java.util.Objects;
 import java.util.Optional;
 
+
 public enum Orientation {
     NORTH, EAST, WEST, SOUTH;
 

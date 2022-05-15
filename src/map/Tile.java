@@ -2,6 +2,9 @@ package map;
 
 import java.util.Objects;
 
+/**
+ * Represents a tile of the map. Obviously holds its position
+ */
 public abstract class Tile {
     private final Position position;
 

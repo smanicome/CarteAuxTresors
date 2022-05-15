@@ -3,6 +3,7 @@ package actions;
 import adventurer.Adventurer;
 import map.TreasureMap;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -17,5 +18,5 @@ public interface Action {
         };
     }
 
-    void process(Adventurer adventurer, TreasureMap treasureMap);
+    void process(Adventurer adventurer, TreasureMap treasureMap, List<Adventurer> adventurers);
 }

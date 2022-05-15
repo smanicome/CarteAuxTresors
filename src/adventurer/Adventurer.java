@@ -1,46 +1,39 @@
 package adventurer;
 
+import actions.Action;
 import map.*;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 
 public class Adventurer {
 
-    public Adventurer(String name, int x, int y, Orientation orientation) {
-        if(x < 0 || y < 0) throw new IllegalArgumentException();
-        this.x = x;
-        this.y = y;
+    public Adventurer(String name, Position position, Orientation orientation, Iterator<Action> actions) {
         this.name = Objects.requireNonNull(name);
+        this.position = Objects.requireNonNull(position);
         this.orientation = Objects.requireNonNull(orientation);
+        this.actions = actions;
     }
 
-    private int x;
-    private int y;
+
     private final String name;
+
+    private Position position;
+
     private Orientation orientation;
+
+    private final Iterator<Action> actions;
 
     private int loots;
 
-    public int getX() {
-        return x;
+
+    public Position getPosition() {
+        return position;
     }
 
-    public void setX(int x) {
-        if(x < 0) throw new IllegalArgumentException("x position must be greater than 0");
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        if(y < 0) throw new IllegalArgumentException("y position must be greater than 0");
-        this.y = y;
-    }
-
-    public String getName() {
-        return name;
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
     public Orientation getOrientation() {
@@ -51,10 +44,6 @@ public class Adventurer {
         this.orientation = Objects.requireNonNull(orientation);
     }
 
-    public int getLoots() {
-        return loots;
-    }
-
     public void incrementLoot() {
         setLoots(loots + 1);
     }
@@ -63,27 +52,31 @@ public class Adventurer {
         this.loots = loots;
     }
 
-    @Override
-    public String toString() {
-        return "A - " + name + " - " + x + " - " + y + " - " + orientation + " - " + loots;
-    }
-
     public void moveToTile(Tile tile) {
         switch (tile) {
-            case Mountain ignored -> {}
-            case Plains plains -> {
-                setX(plains.getX());
-                setY(plains.getY());
-            }
+            case Plains plains -> setPosition(plains.getPosition());
             case Treasure treasure -> {
-                setX(treasure.getX());
-                setY(treasure.getY());
+                setPosition(treasure.getPosition());
 
                 if(treasure.getRemainingLoot() == 0) return;
                 treasure.decrementRemainingLoot();
                 incrementLoot();
             }
-            default -> throw new IllegalStateException("Unexpected value: " + tile);
+            default -> {} // ignore
         }
+    }
+
+    public boolean hasActionsLeft() {
+        return actions.hasNext();
+    }
+
+    public void act(TreasureMap map, List<Adventurer> adventurers) {
+        if(actions.hasNext())
+            actions.next().process(this, map, adventurers);
+    }
+
+    @Override
+    public String toString() {
+        return "A - " + name + " - " + position + " - " + orientation + " - " + loots;
     }
 }

@@ -1,26 +1,13 @@
 package map;
 
-public class Mountain implements Tile {
-    private final int x;
-    private final int y;
+public class Mountain extends Tile {
 
-    public Mountain(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    @Override
-    public int getX() {
-        return x;
-    }
-
-    @Override
-    public int getY() {
-        return y;
+    public Mountain(Position position) {
+        super(position);
     }
 
     @Override
     public String toString() {
-        return "M - " + x + " - " + y;
+        return "M - " + getPosition();
     }
 }

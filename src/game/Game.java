@@ -1,6 +1,5 @@
 package game;
 
-import actions.Action;
 import adventurer.Adventurer;
 import map.TreasureMap;
 
@@ -9,28 +8,24 @@ import java.util.Objects;
 
 public class Game {
     private final TreasureMap map;
-    private final Adventurer adventurer;
-    private final List<Action> actions;
+    private final List<Adventurer> adventurers;
 
-    public Game(TreasureMap map, Adventurer adventurer, List<Action> actions) {
+    public Game(TreasureMap map, List<Adventurer> adventurers) {
         this.map = Objects.requireNonNull(map);
-        this.adventurer = Objects.requireNonNull(adventurer);
-        this.actions = List.copyOf(Objects.requireNonNull(actions));
+        this.adventurers = Objects.requireNonNull(adventurers);
     }
 
     public void run() {
-        actions.forEach(action -> action.process(adventurer, map));
+        while (adventurers.stream().anyMatch(Adventurer::hasActionsLeft)) {
+            adventurers.forEach(adventurer -> adventurer.act(map, adventurers));
+        }
     }
 
     public TreasureMap getMap() {
         return map;
     }
 
-    public Adventurer getAdventurer() {
-        return adventurer;
-    }
-
-    public List<Action> getActions() {
-        return actions;
+    public List<Adventurer> getAdventurers() {
+        return adventurers;
     }
 }

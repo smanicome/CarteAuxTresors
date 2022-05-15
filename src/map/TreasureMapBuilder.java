@@ -1,11 +1,6 @@
 package map;
 
-import map.Tile;
-import map.TreasureMap;
-
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 public class TreasureMapBuilder {
@@ -28,15 +23,6 @@ public class TreasureMapBuilder {
     public TreasureMapBuilder addTile(Tile tile) {
         this.tiles.add(Objects.requireNonNull(tile));
         return this;
-    }
-
-    public TreasureMapBuilder addTiles(List<Tile> tiles) {
-        this.tiles.addAll(Objects.requireNonNull(tiles));
-        return this;
-    }
-
-    public TreasureMapBuilder addTiles(Tile ...tiles) {
-        return this.addTiles(Arrays.asList(Objects.requireNonNull(tiles)));
     }
 
     public TreasureMap build() {

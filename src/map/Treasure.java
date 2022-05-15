@@ -1,24 +1,11 @@
 package map;
 
-public class Treasure implements Tile {
-    private final int x;
-    private final int y;
+public class Treasure extends Tile {
     private int remainingLoot;
 
-    public Treasure(int x, int y, int remainingLoot) {
-        this.x = x;
-        this.y = y;
+    public Treasure(Position position, int remainingLoot) {
+        super(position);
         this.remainingLoot = remainingLoot;
-    }
-
-    @Override
-    public int getX() {
-        return x;
-    }
-
-    @Override
-    public int getY() {
-        return y;
     }
 
     public int getRemainingLoot() {
@@ -36,6 +23,6 @@ public class Treasure implements Tile {
 
     @Override
     public String toString() {
-        return "T - " + x + " - " + y + " - " + remainingLoot;
+        return "T - " + getPosition() + " - " + remainingLoot;
     }
 }

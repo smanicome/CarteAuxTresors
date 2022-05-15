@@ -1,0 +1,12 @@
+# Carte
+C - 3 - 4
+# Montagnes
+M - 1 - 0
+M - 2 - 1
+# Trésors
+T - 0 - 3 - 2
+T - 1 - 3 - 3
+# Aventuriers
+A - Lara - 1 - -1 - S - AADADAGGA
+A - Nathan - 2 - 3 - W - AADDAAGGA
+A - Link - 0 - 2 - E - AADAAAGADA

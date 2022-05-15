@@ -52,6 +52,10 @@ public class Adventurer {
         this.loots = loots;
     }
 
+    public int getLoots() {
+        return loots;
+    }
+
     public void moveToTile(Tile tile) {
         Objects.requireNonNull(tile);
         switch (tile) {
